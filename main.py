@@ -1,28 +1,15 @@
-from business_logic.model.Hogwarts import Hogwarts
-from business_logic.model.Student import Student
+from presentation.StudentManager import StudentManager
+from presentation.menu import Menu
 
 if __name__ == '__main__':
-    hogwarts: Hogwarts = Hogwarts()
-    student: Student = Student("Susan", "Smith")
 
-    print(student.house)
+    student_manager = StudentManager()
+    sub_menu_student_manager = Menu("Student Manager")
+    sub_menu_student_manager.add_menu_item("Add student", student_manager.add_student)
+    sub_menu_student_manager.add_menu_item("List students", student_manager.list_students)
 
-    student.assign_house(hogwarts)
-    print(student.house.name)
+    main_menu = Menu("Main Menu")
+    main_menu.add_menu_item("Student manager", sub_menu_student_manager.activate)
 
-    student.add_house_points(5)
-    student.add_house_points(10)
-    student.add_house_points(2)
-
-    student.assign_house(hogwarts)
-    print(student.house.name)
-    student.add_house_points(10)
-    student.add_house_points(10)
-    student.assign_house(hogwarts)
-    print(student.house.name)
-    student.remove_house_points(5)
-
-    print("House points")
-    for house in hogwarts.houses:
-        print(f"{house.name} - {house.points}")
+    main_menu.activate()
 
