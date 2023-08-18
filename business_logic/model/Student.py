@@ -1,7 +1,7 @@
 from business_logic.model.Hogwarts import Hogwarts
 import random
 
-from business_logic.model.House import Houses, House
+from business_logic.model.House import House
 
 
 class Student:
