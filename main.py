@@ -1,5 +1,5 @@
 from presentation.StudentManager import StudentManager
-from presentation.menu import Menu
+from presentation.Menu import Menu
 
 if __name__ == '__main__':
 
