@@ -1,4 +1,4 @@
-from business_logic.model.House import House, Houses
+from business_logic.model.house import House, Houses
 
 
 class Hogwarts:

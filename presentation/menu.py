@@ -14,7 +14,7 @@ class Menu:
         self.items[title] = func
 
     def draw_menu(self):
-        # os.system("clear")
+        os.system("clear")
         print()
         print(f"****{self.name}****")
         print()
@@ -45,7 +45,6 @@ class Menu:
 
     def activate(self):
         self.isActive = True
-        self.add_menu_item("Exit", self.deactivate)
         while self.isActive:
             self.draw_menu()
             self.select()
