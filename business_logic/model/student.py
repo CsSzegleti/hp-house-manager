@@ -5,7 +5,8 @@ from business_logic.model.house import House
 
 
 class Student:
-    def __init__(self, first_name: str, last_name: str):
+    def __init__(self, obj_id: int, first_name: str, last_name: str):
+        self.id = obj_id
         self.first_name = first_name
         self.last_name = last_name
         self.house: House | None = None

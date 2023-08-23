@@ -9,7 +9,8 @@ class Houses(Enum):
 
 
 class House:
-    def __init__(self, name: Houses, points: int = 0):
+    def __init__(self, obj_id, name: Houses, points: int = 0):
+        self.id = obj_id
         self.name = name
         self.students = []
         self.points = points
