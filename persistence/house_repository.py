@@ -5,11 +5,11 @@ from business_logic.model.house import House
 
 class HouseRepository:
 
-    def __init__(self, database_name: str):
-        self.database_name = database_name
+    def __init__(self, database_uri: str):
+        self.database = database_uri
 
     def list_houses(self) -> [House]:
-        conn = sqlite3.connect("database/hp.db")
+        conn = sqlite3.connect(self.database)
         cursor = conn.cursor()
         sql = '''select ID, NAME, POINTS from houses'''
         cursor.execute(sql)

@@ -1,1 +1,1 @@
-database = "hp.db"
+database = "persistence/database/hp.db"
