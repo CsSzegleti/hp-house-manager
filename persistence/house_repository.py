@@ -1,12 +1,13 @@
 import sqlite3
 
 from business_logic.model.house import House
+from persistence.repository_base import RepositoryBase
 
 
-class HouseRepository:
+class HouseRepository(RepositoryBase):
 
     def __init__(self, database_uri: str):
-        self.database = database_uri
+        super().__init__(database_uri)
 
     def list_houses(self) -> [House]:
         conn = sqlite3.connect(self.database)

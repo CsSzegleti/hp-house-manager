@@ -5,10 +5,12 @@ from business_logic.model.house import House
 
 
 class Student:
-    def __init__(self, obj_id: int, first_name: str, last_name: str):
+    def __init__(self, obj_id: int, first_name: str, last_name: str, house_id: int):
         self.id = obj_id
         self.first_name = first_name
         self.last_name = last_name
+        self.house_id = house_id
+
         self.house: House | None = None
 
     def assign_house(self, hogwarts: Hogwarts):
