@@ -21,9 +21,9 @@ class Menu:
 
     def draw_menu(self):
         os.system("clear")
-        print()
-        print(f"****{self.name}****")
-        print()
+        print(f"****{(len(self.name) + 2) * '*'}****")
+        print(f"**** {self.name} ****")
+        print(f"****{(len(self.name) + 2) * '*'}****")
         for idx, title in enumerate(self.items):
             print(f"{idx + 1} - {title}")
 
@@ -32,13 +32,8 @@ class Menu:
         correct = False
         while not correct:
             user_input = input("Select menu item: ")
-            try:
-                int(user_input)
-            except ValueError:
-                continue
+            correct = self.__validate_user_input(user_input)
             selected_menu_item = int(user_input)
-            if selected_menu_item <= len(self.items.keys()):
-                correct = True
 
             if correct:
                 for idx, title in enumerate(self.items):
@@ -54,3 +49,14 @@ class Menu:
         while self.isActive:
             self.draw_menu()
             self.select()
+
+    def __validate_user_input(self, user_input: str) -> bool:
+        try:
+            int(user_input)
+        except ValueError:
+            return False
+
+        if int(user_input) <= len(self.items.keys()):
+            return True
+
+        return False
