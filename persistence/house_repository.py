@@ -23,3 +23,23 @@ class HouseRepository(RepositoryBase):
         conn.close()
 
         return houses
+
+    def get_house_by_id(self, obj_id: int):
+        conn = sqlite3.connect(self.database)
+        cursor = conn.cursor()
+        sql = '''
+        select ID, NAME, POINTS from houses where ID=?'''
+        cursor.execute(sql, [obj_id])
+
+        if cursor.arraysize == 0:
+            raise Exception("error.entity.not.found")
+
+        house: House = House(*cursor)
+
+        cursor.close()
+        conn.close()
+
+        return house
+
+    def __del__(self):
+        pass
