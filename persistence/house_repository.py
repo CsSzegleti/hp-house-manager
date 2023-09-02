@@ -10,8 +10,7 @@ class HouseRepository(RepositoryBase):
         super().__init__(database_uri)
 
     def list_houses(self) -> [House]:
-        conn = sqlite3.connect(self.database)
-        cursor = conn.cursor()
+        cursor = self.conn.cursor()
         sql = '''
         select ID, NAME, POINTS from houses'''
         cursor.execute(sql)
@@ -21,13 +20,11 @@ class HouseRepository(RepositoryBase):
             houses.append(House(*row))
 
         cursor.close()
-        conn.close()
 
         return houses
 
     def get_house_by_id(self, obj_id: int):
-        conn = sqlite3.connect(self.database)
-        cursor = conn.cursor()
+        cursor = self.conn.cursor()
         sql = '''
         select ID, NAME, POINTS from houses where ID=?'''
         cursor.execute(sql, [obj_id])
@@ -38,9 +35,5 @@ class HouseRepository(RepositoryBase):
         house: House = House(*cursor)
 
         cursor.close()
-        conn.close()
 
         return house
-
-    def __del__(self):
-        pass

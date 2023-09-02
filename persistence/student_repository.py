@@ -10,8 +10,7 @@ class StudentRepository(RepositoryBase):
         super().__init__(database_uri)
 
     def list_students(self, first_name: str, last_name: str, house_id: int) -> [Student]:
-        conn = sqlite3.connect(self.database)
-        cursor = conn.cursor()
+        cursor = self.conn.cursor()
 
         first_name = '%' + first_name + '%'
         last_name = '%' + last_name + '%'
@@ -27,6 +26,5 @@ class StudentRepository(RepositoryBase):
             students.append(Student(*row))
 
         cursor.close()
-        conn.close()
 
         return students
