@@ -12,7 +12,8 @@ class HouseRepository(RepositoryBase):
     def list_houses(self) -> [House]:
         conn = sqlite3.connect(self.database)
         cursor = conn.cursor()
-        sql = '''select ID, NAME, POINTS from houses'''
+        sql = '''
+        select ID, NAME, POINTS from houses'''
         cursor.execute(sql)
 
         houses: [House] = []
