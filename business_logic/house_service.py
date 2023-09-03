@@ -1,5 +1,5 @@
 from persistence.house_repository import HouseRepository
-from config import config
+import config
 from persistence.student_repository import StudentRepository
 
 

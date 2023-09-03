@@ -1,5 +1,3 @@
-import config.config
-from persistence.house_repository import HouseRepository
 from presentation.house_manager import HouseManager
 from presentation.student_manager import StudentManager
 from presentation.menu import Menu
