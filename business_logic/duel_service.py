@@ -17,6 +17,8 @@ class DuelService:
         for i in range(spell.complexity):
             craft.append(random.randint(0, 3))
 
+        return craft
+
     def choose_cpu_player_spell(self, spells: [Spell]) -> Spell:
         if len(spells) > 0:
             return spells[random.randint(0, len(spells) - 1)]
