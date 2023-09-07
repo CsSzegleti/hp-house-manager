@@ -16,7 +16,7 @@ class StudentRepository(RepositoryBase):
         last_name = '%' + last_name + '%'
 
         sql = '''
-        select ID, first_name, last_name, house_id from students
+        select ID, first_name, last_name, house_id, student_level from students
         where first_name like ? and last_name like ? and house_id=?'''
 
         cursor.execute(sql, [first_name, last_name, house_id])

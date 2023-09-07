@@ -35,3 +35,22 @@ insert into students (first_name, last_name, house_id) values ('Sophia', 'Wilder
 insert into students (first_name, last_name, house_id) values ('Ethan', 'Ironhart', 4);
 insert into students (first_name, last_name, house_id) values ('Mia', 'Emberly', 2);
 insert into students (first_name, last_name, house_id) values ('Finley', 'Silverthorn', 1);
+
+-- extend student with spellcrafting things
+alter table students
+add student_level integer;
+
+create table if not exists spells (
+    id integer,
+    name text,
+    complexity integer,
+    damage integer,
+    min_level integer,
+    description text,
+    primary key (id)
+);
+
+insert into spells (name, complexity, damage, min_level, description) VALUES ('Expelliarmus', 1, 5, 1, 'Disarm the opponent');
+insert into spells (name, complexity, damage, min_level, description) VALUES ('Stupefy', 2, 10, 1, 'Stun the opponent');
+insert into spells (name, complexity, damage, min_level, description) VALUES ('Reducto', 3, 15, 2, 'Incapitates the opponent');
+insert into spells (name, complexity, damage, min_level, description) VALUES ('Petrificus Totalus', 3, 17, 3, 'Immobilize the opponent');
