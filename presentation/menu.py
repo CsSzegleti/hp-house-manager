@@ -1,4 +1,4 @@
-import os
+from presentation.console_utils import clear_console
 
 
 class FunctionWithArgs:
@@ -20,7 +20,7 @@ class Menu:
         self.items[title] = FunctionWithArgs(func, args)
 
     def draw_menu(self):
-        os.system("clear")
+        clear_console()
         print(f"****{(len(self.name) + 2) * '*'}****")
         print(f"**** {self.name} ****")
         print(f"****{(len(self.name) + 2) * '*'}****")
