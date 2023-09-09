@@ -28,7 +28,6 @@ class Menu:
             print(f"{idx + 1} - {title}")
 
     def select(self):
-
         correct = False
         while not correct:
             user_input = input("Select menu item: ")
