@@ -1,9 +1,14 @@
+import sys
+
 from presentation.duel_manager import DuelManager
 from presentation.house_manager import HouseManager
 from presentation.student_manager import StudentManager
 from presentation.menu import Menu
+from inint_db import init_db
 
 if __name__ == '__main__':
+    if "--init-db" in sys.argv:
+        init_db()
     student_manager = StudentManager()
     house_manager = HouseManager()
     duel_manager = DuelManager()
