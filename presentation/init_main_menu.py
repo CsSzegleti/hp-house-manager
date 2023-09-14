@@ -17,7 +17,7 @@ def init_main_menu(student_manager: StudentManager, house_manager: HouseManager,
     sub_menu_house_manager.add_menu_item("Exit to main menu", sub_menu_house_manager.deactivate)
 
     # configure the main menu
-    main_menu = Menu("Main Menu")
+    main_menu = Menu("Main Menu", decorator='=', padding=4)
     main_menu.add_menu_item("Student manager", sub_menu_student_manager.activate)
     main_menu.add_menu_item("House manager", sub_menu_house_manager.activate)
     main_menu.add_menu_item("Duel", duel_manager.duel)

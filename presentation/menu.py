@@ -4,6 +4,8 @@ UP_ARROW_KEY = '\x1b[A'
 DOWN_ARROW_KEY = '\x1b[B'
 ENTER_KEY = '\r'
 
+DEFAULT_DECORATOR = '*'
+
 
 class FunctionWithArgs:
     def __init__(self, func: callable, args):
@@ -12,11 +14,20 @@ class FunctionWithArgs:
         self.is_highlighted = False
 
 
+def sanitize_decorator(decorator: str) -> str:
+    if len(decorator) > 1:
+        return decorator[0]
+    else:
+        return decorator
+
+
 class Menu:
-    def __init__(self, name: str):
+    def __init__(self, name: str, decorator: str = '*', padding: int = 3):
         self.isActive = False
         self.items = dict()
         self.name = name
+        self.decorator = sanitize_decorator(decorator)
+        self.padding = padding
 
     def add_menu_item(self, title: str, func: callable, *args):
         if title in self.items.keys():
@@ -26,9 +37,12 @@ class Menu:
 
     def draw_menu(self):
         console.clear_console()
-        print(f"****{(len(self.name) + 2) * '*'}****")
-        print(f"**** {self.name} ****")
-        print(f"****{(len(self.name) + 2) * '*'}****")
+        if len(self.decorator) > 0:
+            print(f"{self.padding * self.decorator}{(len(self.name) + 2) * self.decorator}{self.padding * self.decorator}")
+        print(f"{self.padding * self.decorator}{len(self.decorator) * ' '}{self.name}{len(self.decorator) * ' '}{self.padding * self.decorator}")
+        if len(self.decorator) > 0:
+            print(f"{self.padding * self.decorator}{(len(self.name) + 2) * self.decorator}{self.padding * self.decorator}")
+        print()
         for idx, title in enumerate(self.items):
             print(f"{console.highlighted(title) if self.items[title].is_highlighted else title}")
 
@@ -51,7 +65,7 @@ class Menu:
             self.__highlight_menu_item(selected_idx + 1)
             self.draw_menu()
 
-    def read_user_input(self):
+    def __read_user_input(self):
         user_input = console.get_char()
         if user_input == UP_ARROW_KEY:
             self.__move_select_up()
@@ -71,6 +85,8 @@ class Menu:
         self.items[selected_key].func(*self.items[selected_key].args)
 
     def deactivate(self):
+        selected_idx, selected_key = self.__get_selected()
+        self.__dehighlight_menu_item(selected_idx)
         self.isActive = False
 
     def activate(self):
@@ -79,16 +95,4 @@ class Menu:
             self.__highlight_menu_item(0)
         while self.isActive:
             self.draw_menu()
-            self.read_user_input()
-            # self.select()
-
-    def __validate_user_input(self, user_input: str) -> bool:
-        try:
-            int(user_input)
-        except ValueError:
-            return False
-
-        if int(user_input) <= len(self.items.keys()):
-            return True
-
-        return False
+            self.__read_user_input()
