@@ -54,3 +54,20 @@ insert into spells (name, complexity, damage, min_level, description) VALUES ('E
 insert into spells (name, complexity, damage, min_level, description) VALUES ('Stupefy', 2, 10, 1, 'Stun the opponent');
 insert into spells (name, complexity, damage, min_level, description) VALUES ('Reducto', 3, 15, 2, 'Incapitates the opponent');
 insert into spells (name, complexity, damage, min_level, description) VALUES ('Petrificus Totalus', 3, 17, 3, 'Immobilize the opponent');
+
+-- trivia
+create table if not exists question (
+    id integer,
+    text text,
+    difficulty integer,
+    primary key (id),
+)
+
+create table if not exists answer (
+    id integer,
+    text text,
+    correct integer,
+    question_id integer,
+    primary key (id),
+    foreign key (question_id) references question(id),
+)
