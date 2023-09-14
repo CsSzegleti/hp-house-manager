@@ -12,7 +12,7 @@ class HouseManager:
         house_menu = Menu("House list")
 
         for house in houses:
-            house_menu.add_menu_item(house.name, self.list_house_students, house.id)
+            house_menu.add_menu_item(str(house.name), self.list_house_students, house.id)
 
         house_menu.add_menu_item("Exit to house manager", house_menu.deactivate)
         house_menu.activate()
