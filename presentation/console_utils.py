@@ -9,6 +9,14 @@ def highlighted(string: str) -> str:
     return "\033[7m" + string + "\033[0m"
 
 
+def pad_left(string: str, num_spaces: int) -> str:
+    return num_spaces * ' ' + string
+
+
+def pad_right(string: str, num_spaces: int) -> str:
+    return string + num_spaces * ' '
+
+
 def __get_char_windows():
     import msvcrt
     return msvcrt.getch()
