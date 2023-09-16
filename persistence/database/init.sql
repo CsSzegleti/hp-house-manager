@@ -60,8 +60,8 @@ create table if not exists question (
     id integer,
     text text,
     difficulty integer,
-    primary key (id),
-)
+    primary key (id)
+);
 
 create table if not exists answer (
     id integer,
@@ -69,5 +69,5 @@ create table if not exists answer (
     correct integer,
     question_id integer,
     primary key (id),
-    foreign key (question_id) references question(id),
-)
+    foreign key (question_id) references question(id)
+);
