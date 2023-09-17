@@ -1,4 +1,6 @@
-import presentation.console_utils as console
+import presentation.menu.console_utils as console
+from presentation.menu.drawer import Drawer
+from presentation.menu.drawer import MenuItem
 
 UP_ARROW_KEY = '\x1b[A'
 DOWN_ARROW_KEY = '\x1b[B'
@@ -14,48 +16,12 @@ class FunctionWithArgs:
         self.is_highlighted = False
 
 
-def sanitize_decorator(decorator: str) -> str:
-    if len(decorator) > 1:
-        return decorator[0]
-    else:
-        return decorator
-
-
 class Menu:
-    def __init__(self, name: str, drawer_factory: callable):
+    def __init__(self, name: str, drawer: Drawer):
         self.isActive = False
         self.items = dict()
         self.name = name
-        self.drawer = drawer_factory(self)
-
-    class Drawer:
-        def __init__(self, menu):
-            self.menu = menu
-
-        def draw_header(self):
-            print()
-            print(self.menu.name)
-            print()
-        
-        def draw_items(self):
-            for tag in self.menu.items:
-                print(f"{console.highlighted(tag) if self.menu.items[tag].is_highlighted else tag}")
-
-        def highlight(self, string: str) -> str:
-            return "\033[7m" + string + "\033[0m"
-        
-        def __len_to_full(self, tag: str) -> int:
-            return self.__get_longest_tag_size() - len(tag)
-        
-        def __get_longest_tag_size(self):
-            return max([len(tag) for tag in self.items.keys()])
-        
-        def __pad_left(self, string: str, num_spaces: int) -> str:
-            return num_spaces * ' ' + string
-
-        def __pad_right(self, string: str, num_spaces: int) -> str:
-            return string + num_spaces * ' '
-
+        self.drawer = drawer
 
     def add_menu_item(self, title: str, func: callable, *args):
         if title in self.items.keys():
@@ -65,8 +31,8 @@ class Menu:
 
     def draw_menu(self):
         console.clear_console()
-        self.drawer.draw_header()
-        self.drawer.draw_items()
+        self.drawer.draw_header(self.name)
+        self.drawer.draw_items([MenuItem(tag, value.is_highlighted) for (tag, value) in self.items.items()])
 
     def __get_selected(self):
         for idx, (key, value) in enumerate(self.items.items()):

@@ -1,7 +1,8 @@
 from business_logic.duel_service import DuelService
 from business_logic.model.spell import Spell
-from presentation.menu import Menu
+from presentation.menu.menu import *
 import time
+
 
 player_keys = ['q', 'w', 'e', 'r', 't']
 
@@ -31,7 +32,7 @@ class DuelManager:
 
     def __player_spell_selector(self):
         spells = self.duel_service.list_spells()
-        spell_menu = Menu("Choose a spell")
+        spell_menu = Menu("Choose a spell", Drawer())
 
         for spell in spells:
             spell_menu.add_menu_item(spell.name, self.__choose_spell, spell, spell_menu)

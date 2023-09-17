@@ -1,5 +1,5 @@
 from business_logic.house_service import HouseService
-from presentation.menu import Menu
+from presentation.menu import *
 
 
 class HouseManager:
@@ -9,7 +9,7 @@ class HouseManager:
 
     def list_houses(self):
         houses = self.house_service.list_houses()
-        house_menu = Menu("House list")
+        house_menu = menu.Menu("House list", drawer.Drawer())
 
         for house in houses:
             house_menu.add_menu_item(str(house.name), self.list_house_students, house.id)
