@@ -22,13 +22,40 @@ def sanitize_decorator(decorator: str) -> str:
 
 
 class Menu:
-    def __init__(self, name: str, decorator: str = '*', padding: int = 3, item_padding: int = 4):
+    def __init__(self, name: str, drawer_factory: callable):
         self.isActive = False
         self.items = dict()
         self.name = name
-        self.decorator = sanitize_decorator(decorator)
-        self.padding = padding
-        self.item_padding = item_padding
+        self.drawer = drawer_factory(self)
+
+    class Drawer:
+        def __init__(self, menu):
+            self.menu = menu
+
+        def draw_header(self):
+            print()
+            print(self.menu.name)
+            print()
+        
+        def draw_items(self):
+            for tag in self.menu.items:
+                print(f"{console.highlighted(tag) if self.menu.items[tag].is_highlighted else tag}")
+
+        def highlight(self, string: str) -> str:
+            return "\033[7m" + string + "\033[0m"
+        
+        def __len_to_full(self, tag: str) -> int:
+            return self.__get_longest_tag_size() - len(tag)
+        
+        def __get_longest_tag_size(self):
+            return max([len(tag) for tag in self.items.keys()])
+        
+        def __pad_left(self, string: str, num_spaces: int) -> str:
+            return num_spaces * ' ' + string
+
+        def __pad_right(self, string: str, num_spaces: int) -> str:
+            return string + num_spaces * ' '
+
 
     def add_menu_item(self, title: str, func: callable, *args):
         if title in self.items.keys():
@@ -38,19 +65,8 @@ class Menu:
 
     def draw_menu(self):
         console.clear_console()
-        if len(self.decorator) > 0:
-            print(
-                f"{self.padding * self.decorator}{(len(self.name) + 2) * self.decorator}{self.padding * self.decorator}")
-        print(
-            f"{self.padding * self.decorator}{len(self.decorator) * ' '}{self.name}{len(self.decorator) * ' '}{self.padding * self.decorator}")
-        if len(self.decorator) > 0:
-            print(
-                f"{self.padding * self.decorator}{(len(self.name) + 2) * self.decorator}{self.padding * self.decorator}")
-        print()
-        for title in self.items:
-            padded_title = console.pad_right(title, self.__len_to_full(title))
-            print(
-                f"{self.item_padding * ' '}{console.highlighted(padded_title) if self.items[title].is_highlighted else padded_title}")
+        self.drawer.draw_header()
+        self.drawer.draw_items()
 
     def __get_selected(self):
         for idx, (key, value) in enumerate(self.items.items()):
@@ -86,14 +102,10 @@ class Menu:
     def __dehighlight_menu_item(self, idx):
         list(self.items.values())[idx].is_highlighted = False
 
-    def __get_longest_tag_size(self):
-        return max([len(tag) for tag in self.items.keys()])
 
-    def __len_to_full(self, tag: str) -> int:
-        return self.__get_longest_tag_size() - len(tag)
 
     def select(self):
-        selected_idx, selected_key = self.__get_selected()
+        _, selected_key = self.__get_selected()
         self.items[selected_key].func(*self.items[selected_key].args)
 
     def deactivate(self):
