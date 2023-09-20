@@ -3,11 +3,16 @@ import random
 import config
 from business_logic.model.spell import Spell
 from persistence.spell_repository import SpellRepository
+from persistence.house_repository import HouseRepository
 
 
 class DuelService:
     def __init__(self):
         self.spell_repo = SpellRepository(config.database)  # TODO refactor this hidden dependency
+        self.house_repo = HouseRepository(config.database)
+
+    def list_houses(self):
+        return self.house_repo.list_houses()
 
     def list_spells(self):
         return self.spell_repo.list_spells()
