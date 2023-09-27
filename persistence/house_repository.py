@@ -37,3 +37,12 @@ class HouseRepository(RepositoryBase):
         cursor.close()
 
         return house
+
+    def add_score(self, obj_id: int, score:int ):
+        cursors = self.conn.cursor()
+        sql = '''
+        update houses
+        set POINTS = POINTS +?
+        where ID = ?'''
+        cursors.execute(sql,[score,obj_id])
+        cursors.close()

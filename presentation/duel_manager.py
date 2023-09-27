@@ -1,6 +1,8 @@
+
 from business_logic.duel_service import DuelService
 from business_logic.model.spell import Spell
 from business_logic.model.house import House
+from business_logic.model.student import Student
 from presentation.menu import Menu
 import time
 
@@ -11,10 +13,10 @@ class DuelManager:
     def __init__(self):
         self.duel_service = DuelService()
         self.chosen_spell: None | Spell = None
-        self.chosen_house: None | House = None
+        self.player = Student(-1,"","",-1,-1)
 
     def __choose_house(self, house: House, house_menu: Menu):
-        self.chosen_house = house
+        self.player.house_id = house.id
         house_menu.deactivate()
 
     def __player_house_selector(self):
@@ -34,10 +36,11 @@ class DuelManager:
         player_cast_time = self.__cast_player_spell()
 
         print(f"Your time: {player_cast_time} | Opponent time: {cpu_player_cast_time}")
-
         if player_cast_time <= cpu_player_cast_time:
+            self.duel_service.give_score(self.player)
             print("You were faster, congratulations")
         else:
+            #self.duel_service.give_score(self.chosen_house.id,)
             print("You have lost")
         input("Press ENTER to continue...")
 

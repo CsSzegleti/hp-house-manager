@@ -1,7 +1,9 @@
 import random
 
 import config
+from business_logic.house_service import HouseService
 from business_logic.model.spell import Spell
+from business_logic.model.student import Student
 from persistence.spell_repository import SpellRepository
 from persistence.house_repository import HouseRepository
 
@@ -10,6 +12,7 @@ class DuelService:
     def __init__(self):
         self.spell_repo = SpellRepository(config.database)  # TODO refactor this hidden dependency
         self.house_repo = HouseRepository(config.database)
+        self.house_service = HouseService()
 
     def list_houses(self):
         return self.house_repo.list_houses()
@@ -32,6 +35,11 @@ class DuelService:
     def cpu_player_cast_time(self, spell: Spell):
         time = 0
         for i in range(spell.complexity):
-            time += (random.random() + 0.5) % 1
+            time += (random.random() + 0.5) % 10
 
         return time
+
+    def give_score(self, winner:Student):
+        self.house_service.add_points(winner.house_id,5)
+
+
