@@ -45,4 +45,5 @@ class HouseRepository(RepositoryBase):
         set points = houses.points +?
         where id = ?'''
         cursors.execute(sql, [score, obj_id])
+        self.conn.commit()
         cursors.close()
